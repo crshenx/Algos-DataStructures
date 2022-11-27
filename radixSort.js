@@ -17,15 +17,24 @@ function mostDigits(arr) {
 }
 
 function radixSort(nums) {
+  // find how many times we need to put numbers into buckets
   let maxOfDigits = mostDigits(nums);
+  // loop that many times
   for (let k = 0; k < maxOfDigits; k++) {
+    // initialize 10 empty array ie. our buckets
     let digitBucket = Array.from({ length: 10 }, () => []);
+    // loop over each number
     for (let i = 0; i < nums.length; i++) {
+      // at givin index k get that number
       let digit = getDigit(nums[i], k);
+      // and push it into the kth corresponding array
       digitBucket[digit].push(nums[i]);
     }
+    // join the arrays in the new order
     nums = [].concat(...digitBucket);
+    // repeat
   }
+  // return the sorted array
   return nums;
 }
 
