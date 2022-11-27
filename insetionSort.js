@@ -14,13 +14,21 @@ console.log(insertionSort([5, 2, 6, 7, 3345]));
 // WITHOUT VAR
 
 function insertNoVar(arr) {
+  // begin loop at one as everything left of i will be sorted
   for (let i = 1; i < arr.length; i++) {
+    // j will be everything left of i
     let j = i - 1;
+    // store a temp for the ele we need to insert
     let temp = arr[i];
+    // if we dont have more to compare in the left
+    // and the sorted section is greater we insert here
     while (j > -1 && arr[j] > temp) {
+      // insert by swapping the two ele
       arr[j + 1] = arr[j];
+      // dec j to continue checking
       j--;
     }
+    // reset the temp to the next item
     arr[j + 1] = temp;
   }
   return arr;
