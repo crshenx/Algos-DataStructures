@@ -62,5 +62,3 @@ var lengthOfLongestSubstring = function (s) {
   }
   return longest;
 };
-
-// leetcode where will the ball fall

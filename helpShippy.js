@@ -82,16 +82,15 @@ function matchCandidates(candidates, developers) {
     }
   }
 
-  //   for (let [key, val] of developers.entries()) {
-  //     if (obj[val.email]) {
-  //       val.id = obj[val.email];
-  //     } else if (obj[val.name + val.company]) {
-  //       dev.id = obj[val.name + val.company];
-  //     } else {
-  //       val.id = null;
-  //     }
+  //   for (let dev of developers) {
+  //     let devValues = Object.values(dev);
+  //     let val0 = devValues[0];
+  //     let val1 = devValues[1];
+  //     let val2 = devValues[2];
+  //     console.log(devValues);
+  //     c = obj[val0] ?? obj[val1] ?? obj[val2];
+  //     dev.id = c ?? null;
   //   }
-
   for (let dev of developers) {
     let devValues = Object.values(dev);
     devValues.forEach((val) => {
@@ -106,5 +105,37 @@ function matchCandidates(candidates, developers) {
   return developers;
 }
 
-console.log(matchCandidates(custom1.candidates, custom1.developers));
-// console.log(matchCandidates(custom2.candidates, custom2.developers));
+function matchCandidates2(candidates, developers) {
+  const obj = {};
+
+  for (let cand of candidates) {
+    if (cand.email) {
+      obj[cand.email] = cand.id;
+    }
+    if (cand.name && cand.company) {
+      obj[cand.name + cand.company] = cand.id;
+    }
+  }
+
+  for (let [key, val] of developers.entries()) {
+    if (obj[val.email]) {
+      val.id = obj[val.email];
+    } else if (obj[val.name + val.company]) {
+      val.id = obj[val.name + val.company];
+    } else {
+      val.id = null;
+    }
+  }
+
+  return developers;
+}
+
+// console.log(
+//   performance.now(matchCandidates(custom1.candidates, custom1.developers))
+// );
+// console.log(
+//   performance.now(matchCandidates2(custom1.candidates, custom1.developers))
+// );
+// // console.time(matchCandidates2(custom1.candidates, custom1.developers));
+// console.log(matchCandidates(custom1.candidates, custom1.developers));
+// console.log(matchCandidates2(custom1.candidates, custom1.developers));
