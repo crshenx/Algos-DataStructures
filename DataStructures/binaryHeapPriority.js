@@ -1,9 +1,17 @@
-class MaxBinaryHeap {
+class Node {
+  constructor(val, priority) {
+    this.val = val;
+    this.priority = priority;
+  }
+}
+
+class MinPriorityHeap {
   constructor() {
     this.val = [];
   }
-  insert(ele) {
-    this.val.push(ele);
+  enQ(val, priority) {
+    let newNode = new Node(val, priority);
+    this.val.push(newNode);
     this.bubbleUp();
   }
   bubbleUp() {
@@ -12,20 +20,20 @@ class MaxBinaryHeap {
     while (i > 0) {
       let parentI = Math.floor((i - 1) / 2);
       let parent = this.val[parentI];
-      if (ele <= parent) break;
+      if (ele.priority >= parent.priority) break;
       this.val[parentI] = ele;
       this.val[i] = parent;
       i = parentI;
     }
   }
-  extractMax() {
-    let maxToBeExtracted = this.val[0];
+  deQ() {
+    let min = this.val[0];
     let end = this.val[this.val.length - 1];
     this.val[0] = end;
     this.val.pop();
     if (this.val.length > 0) this.sinkDown();
     else this.val = [];
-    return maxToBeExtracted;
+    return min;
   }
   sinkDown() {
     let i = 0;
@@ -39,13 +47,16 @@ class MaxBinaryHeap {
       let swap = null;
       if (leftI < length) {
         leftChild = this.val[leftI];
-        if (leftChild > ele) {
+        if (leftChild.priority < ele.priority) {
           swap = leftI;
         }
       }
       if (rightI < length) {
         rightChild = this.val[rightI];
-        if ((!swap && rightChild > ele) || (swap && rightChild > leftChild)) {
+        if (
+          (!swap && rightChild.priority < ele.priority) ||
+          (swap && rightChild.priority < leftChild.priority)
+        ) {
           swap = rightI;
         }
       }
@@ -57,21 +68,15 @@ class MaxBinaryHeap {
   }
 }
 
-let heap = new MaxBinaryHeap();
-heap.insert(41);
-heap.insert(39);
-heap.insert(33);
-heap.insert(18);
-heap.insert(27);
-heap.insert(12);
-heap.insert(55);
-console.log(heap.val);
-console.log(heap.extractMax(), heap.val);
-console.log(heap.extractMax(), heap.val);
-console.log(heap.extractMax(), heap.val);
-console.log(heap.extractMax(), heap.val);
-console.log(heap.extractMax(), heap.val);
-console.log(heap.extractMax(), heap.val);
-console.log(heap.extractMax(), heap.val);
-console.log(heap.extractMax(), heap.val);
-console.log(heap.extractMax(), heap.val);
+let q = new MinPriorityHeap();
+q.enQ("cold", 5);
+q.enQ("shot", 1);
+q.enQ("fever", 4);
+q.enQ("BROKEN", 2);
+q.enQ("GLASS", 3);
+console.log(q);
+console.log(q.deQ());
+console.log(q.deQ());
+console.log(q.deQ());
+console.log(q.deQ());
+console.log(q.deQ());
