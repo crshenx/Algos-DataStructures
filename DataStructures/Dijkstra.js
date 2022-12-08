@@ -2,8 +2,8 @@ class PriorityQue {
   constructor() {
     this.val = [];
   }
-  enQ(val, priority) {
-    this.val.push({ val, priority });
+  enQ(value, priority) {
+    this.val.push({ value, priority });
     this.sort();
   }
   deQ() {
@@ -29,6 +29,9 @@ class WeightedGraph {
     const nodes = new PriorityQue();
     const distances = {};
     const previous = {};
+    let path = [];
+    let smallest;
+    // INITIAL STATE A TO A = 0 REST INFINIT
     for (let vertex in this.adjList) {
       if (vertex === start) {
         distances[vertex] = 0;
@@ -39,6 +42,35 @@ class WeightedGraph {
       }
       previous[vertex] = null;
     }
+    // AS LONG AS THERE IS SOMETHING TO VISIT
+    while (nodes.val.length) {
+      console.log(smallest);
+      smallest = nodes.deQ().val;
+      if (smallest === finish) {
+        while (previous[smallest]) {
+          path.push(smallest);
+          smallest = previous[smallest];
+        }
+        break;
+      }
+      if (smallest || distances[smallest] !== Infinity) {
+        for (let neighbor in this.adjList[smallest]) {
+          let nextNode = this.adjList[smallest][neighbor];
+
+          let candidate = distances[smallest] + nextNode.weight;
+          let nextNeighbor = nextNode.node;
+          if (candidate < distances[nextNeighbor]) {
+            // updating new smallest distance to neighbor
+            distances[nextNeighbor] = candidate;
+            // updating how we got there
+            previous[nextNeighbor] = smallest;
+            // enqueue in priority que with new priority
+            nodes.enQ(nextNeighbor, candidate);
+          }
+        }
+      }
+    }
+    return path;
   }
 }
 
@@ -53,9 +85,9 @@ g.addEdge("A", "B", 4);
 g.addEdge("A", "C", 2);
 g.addEdge("B", "E", 3);
 g.addEdge("C", "D", 2);
-g.addEdge("C", "E", 4);
+g.addEdge("C", "F", 4);
 g.addEdge("D", "E", 3);
 g.addEdge("D", "F", 1);
 g.addEdge("E", "F", 1);
 
-console.log(g);
+console.log(g.Dijkstra("A", "E"));
