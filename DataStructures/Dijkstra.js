@@ -44,8 +44,7 @@ class WeightedGraph {
     }
     // AS LONG AS THERE IS SOMETHING TO VISIT
     while (nodes.val.length) {
-      console.log(smallest);
-      smallest = nodes.deQ().val;
+      smallest = nodes.deQ().value;
       if (smallest === finish) {
         while (previous[smallest]) {
           path.push(smallest);
@@ -70,7 +69,7 @@ class WeightedGraph {
         }
       }
     }
-    return path;
+    return path.concat(smallest).reverse();
   }
 }
 
@@ -89,5 +88,7 @@ g.addEdge("C", "F", 4);
 g.addEdge("D", "E", 3);
 g.addEdge("D", "F", 1);
 g.addEdge("E", "F", 1);
-
 console.log(g.Dijkstra("A", "E"));
+console.log(g.Dijkstra("A", "D"));
+
+// console.log(g.Dijkstra("A", "E"));
