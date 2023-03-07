@@ -88,7 +88,9 @@ g.addEdge("C", "F", 4);
 g.addEdge("D", "E", 3);
 g.addEdge("D", "F", 1);
 g.addEdge("E", "F", 1);
-console.log(g.Dijkstra("A", "E"));
-console.log(g.Dijkstra("A", "D"));
+// console.log(g.Dijkstra("A", "E"));
+// console.log(g.Dijkstra("A", "D"));
 
 // console.log(g.Dijkstra("A", "E"));
+x = 10 % 3;
+console.log(x);
